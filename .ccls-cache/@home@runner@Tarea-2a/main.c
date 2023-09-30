@@ -57,7 +57,7 @@ int main() {
       strncpy(puntoInteres->horario, horario, MAX);
       strncpy(puntoInteres->descripcion, descripcion, MAX);
 
-      insertarPuntoInteres(mapa, puntoInteres->nombre, puntoInteres);
+      registrarPto(mapa, puntoInteres->nombre, puntoInteres);
       printf("Punto de interes registrado.\n");
       break;
     }
@@ -67,7 +67,7 @@ int main() {
       fgets(nombre, sizeof(nombre), stdin);
       nombre[strcspn(nombre, "\n")] = '\0';
 
-      PuntoInteres *puntoInteres = obtenerPuntoInteres(mapa, nombre);
+      PuntoInteres *puntoInteres = buscarPto(mapa, nombre);
       if (puntoInteres != NULL) {
         printf("Nombre: %s\n", puntoInteres->nombre);
         printf("Tipo: %s\n", puntoInteres->tipo);
@@ -85,7 +85,7 @@ int main() {
       fgets(nombre, sizeof(nombre), stdin);
       nombre[strcspn(nombre, "\n")] = '\0';
 
-      eliminarPuntoInteres(mapa, nombre);
+      eliminarPto(mapa, nombre);
       printf("El punto de interes fue eliminado!\n");
       break;
     }
@@ -107,7 +107,7 @@ int main() {
       strncpy(turista->pais, pais, MAX);
       turista->lugaresFavoritos = NULL;
 
-      insertarTurista(mapa, turista->pasaporte, turista);
+      registrarTurista(mapa, turista->pasaporte, turista);
       printf("Turista registrado!.\n");
       break;
     }
@@ -120,9 +120,9 @@ int main() {
       fgets(nombreLugar, sizeof(nombreLugar), stdin);
       nombreLugar[strcspn(nombreLugar, "\n")] = '\0';
 
-      Turista *turista = obtenerTurista(mapa, pasaporte);
+      Turista *turista = buscarTurista(mapa, pasaporte);
       if (turista != NULL) {
-        agregarLugarFavorito(turista, nombreLugar);
+        agregarFavorito(turista, nombreLugar);
         printf("Lugar favorito agregado!\n");
       } else {
         printf("Turista no registrado.\n");
@@ -136,7 +136,7 @@ int main() {
       pais[strcspn(pais, "\n")] = '\0';
 
       printf("Turistas de %s:\n", pais);
-      mostrarTuristasPorPais(mapa, pais);
+      mostrarPorPais(mapa, pais);
       break;
     }
     case 7: {
@@ -146,7 +146,7 @@ int main() {
       tipo[strcspn(tipo, "\n")] = '\0';
 
       printf("Puntos de interés de tipo %s:\n", tipo);
-      mostrarPuntosDeInteresPorTipo(mapa, tipo);
+      mostrarPtsTipo(mapa, tipo);
       break;
     }
     case 8: {
@@ -158,7 +158,7 @@ int main() {
       fgets(archivoTuristas, sizeof(archivoTuristas), stdin);
       archivoTuristas[strcspn(archivoTuristas, "\n")] = '\0';
 
-      importarDesdeCSV(mapa, archivoPuntos, archivoTuristas);
+      importar(mapa, archivoPuntos, archivoTuristas);
       printf("Datos importados!\n");
       break;
     }
@@ -171,7 +171,7 @@ int main() {
       fgets(archivoTuristas, sizeof(archivoTuristas), stdin);
       archivoTuristas[strcspn(archivoTuristas, "\n")] = '\0';
 
-      exportarACSV(mapa, archivoPuntos, archivoTuristas);
+      exportar(mapa, archivoPuntos, archivoTuristas);
       printf("Datos exportados!\n");
       break;
     }
