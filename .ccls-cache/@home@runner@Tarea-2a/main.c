@@ -10,8 +10,7 @@ void limpiarBuffer() {
     ;
 }
 
-
-//Funcion para mostrar el menu principal
+// Funcion para mostrar el menu principal
 
 void mostrarMenu() {
   printf("\n==============================================================\n");
@@ -43,7 +42,7 @@ int main() {
 
     switch (opcion) {
     case 1: {
-      //Registro De puntos de interes
+      // Registro De puntos de interes
       char nombre[MAX], tipo[MAX], direccion[MAX], horario[MAX],
           descripcion[MAX];
       printf("\nIngrese nombre del punto de interes: ");
@@ -74,8 +73,8 @@ int main() {
       break;
     }
     case 2: {
-      //Mostrar datos de un punto de interes
-      
+      // Mostrar datos de un punto de interes
+
       char nombre[MAX];
       printf("\nIngrese nombre del punto de interes: ");
       fgets(nombre, sizeof(nombre), stdin);
@@ -95,10 +94,13 @@ int main() {
     }
     case 3: {
 
-      //Eliminar puntos de interes
+      // Eliminar puntos de interes
       char nombre[MAX];
       printf("\nIngrese nombre del punto de interes: ");
-      fgets(nombre, sizeof(nombre), stdin);
+
+      if (fgets(nombre, sizeof(nombre), stdin) == NULL) {
+        exit(EXIT_FAILURE);
+      }
       nombre[strcspn(nombre, "\n")] = '\0';
 
       PuntoInteres *puntoInteres = buscarPto(mapa, nombre);
@@ -115,8 +117,8 @@ int main() {
     }
     case 4: {
 
-      //Registrar turistas
-      
+      // Registrar turistas
+
       char pasaporte[MAX], nombre[MAX], pais[MAX];
       printf("\nIngrese numero de pasaporte: ");
       fgets(pasaporte, sizeof(pasaporte), stdin);
@@ -141,21 +143,26 @@ int main() {
     case 5: {
       char pasaporte[MAX], nombreLugar[MAX];
       printf("\nIngres numero de pasaporte: ");
-      fgets(pasaporte, sizeof(pasaporte), stdin);
+      if (fgets(pasaporte, sizeof(pasaporte), stdin) == NULL) {
+        perror("Error al leer el número de pasaporte");
+        exit(EXIT_FAILURE);
+      }
       pasaporte[strcspn(pasaporte, "\n")] = '\0';
       printf("Ingrese nombre del lugar favorito: ");
-      fgets(nombreLugar, sizeof(nombreLugar), stdin);
+      if (fgets(nombreLugar, sizeof(nombreLugar), stdin) == NULL) {
+        exit(EXIT_FAILURE);
+      }
       nombreLugar[strcspn(nombreLugar, "\n")] = '\0';
-
       Turista *turista = buscarTurista(mapa, pasaporte);
       if (turista != NULL) {
         agregarFavorito(turista, nombreLugar);
         printf("Lugar favorito agregado!\n");
       } else {
-        printf("\nTurista no registrado.\n");
+        printf("Turista no registrado.\n");
       }
       break;
     }
+
     case 6: {
       char pais[MAX];
       printf("\nIngrese pais del turista: ");
