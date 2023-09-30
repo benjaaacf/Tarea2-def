@@ -2,6 +2,8 @@
 #define MAPA_H
 #define MAX 100
 
+
+// Definicion de structs a utilizar
 typedef struct {
   char nombre[MAX];
   char tipo[MAX];
